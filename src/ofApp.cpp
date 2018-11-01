@@ -116,7 +116,7 @@ void ofApp::setup() {
 	// OSC setup  * * * * * * * * * * * * *
 	// OSC setup  * * * * * * * * * * * * *
 	// OSC setup  * * * * * * * * * * * * *
-	oscSender.disableBroadcast();
+	//oscSender.disableBroadcast();
 	oscSender.setup(HostField, oscPort);
 	oscReceiver.setup(oscPortIn);
 
@@ -641,7 +641,7 @@ string ofApp::escape_quotes(const string &before)
 //--------------------------------------------------------------
 void ofApp::HostFieldChanged() {
 	cout << "fieldChange" << endl;
-	oscSender.disableBroadcast();
+	//oscSender.disableBroadcast();
 	oscSender.setup(HostField, oscPort);
 	oscReceiver.setup(oscPortIn);
 	cout << "updated" << endl;

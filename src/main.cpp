@@ -38,8 +38,8 @@ int main( ){
 	ofGLFWWindowSettings settings;
 	//settings.iconified = true;
 	settings.resizable = false;
-	settings.width = 1024;
-	settings.height = 768;
+	//settings.width = 1024;
+	//settings.height = 768;
 	ofCreateWindow(settings);
 	return ofRunApp(new ofApp);
 

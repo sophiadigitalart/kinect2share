@@ -25,7 +25,7 @@
 #include "ofxOsc.h"
 #include "ofxGui.h"
 #include "ofxInputField.h"
-#include "ofxSpout2.h"
+#include "ofxSpout2Sender.h"
 #include "ofxNDI.h"
 
 //  ** added from NDI sender example **
@@ -68,7 +68,7 @@ public:
 	ofFbo fboColor; // draw to for spout, setup at 1080x
 
 	// Spout obj
-	ofxSpout2 spout;
+	ofxSpout2::Sender spout;
 
 
 	//  *** added from NDI sender example ***
