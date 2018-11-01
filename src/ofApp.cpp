@@ -3,19 +3,19 @@
 /*
 *  kinect2share
 *
-*  Created by Ryan Webber 
+*  Created by Ryan Webber
 *  http://www.DusXproductions.com
 *  https://github.com/rwebber
 *
 *  The goal of this project is to make as many Kinect2 features available to creative platforms as possible,
 *  using open standards including OSC (opensoundcontrol), Spout, and NDI (https://www.newtek.com/ndi/).
-*  
-*  Specific care has been given to providing a demo file for use with the Isadora creativity server. 
-*  The demo file provides basic functional examples that Isadora users can build upon.  
+*
+*  Specific care has been given to providing a demo file for use with the Isadora creativity server.
+*  The demo file provides basic functional examples that Isadora users can build upon.
 *  http://troikatronix.com/
 *
 *  MIT License http://en.wikipedia.org/wiki/MIT_License
-* 
+*
 *  This project is built using OpenFrameWorks and utilizes a number of amazing addons offered by the community.
 *  Please read the ReadMe file included in the github reprository, for details.
 */
@@ -89,7 +89,7 @@ void ofApp::setup() {
 	OSCgroup.add(oscPort.setup("Output port", 1234));
 	OSCgroup.add(oscPortIn.setup("Input port", 4321));
 	gui.add(&OSCgroup);
-	
+
 	SPOUTgroup.setup("Spout");
 	SPOUTgroup.add(spoutCutOut.setup("BnW cutouts -> spout", true));
 	SPOUTgroup.add(spoutColor.setup("Color -> spout", true));
@@ -110,7 +110,7 @@ void ofApp::setup() {
 	//	ofLogError("kv2") << "Unable to load settings xml";
 	//	ofExit();
 	//}
-	
+
 	// HostField.addListener(this, &ofApp::HostFieldChanged);
 
 	// OSC setup  * * * * * * * * * * * * *
@@ -124,7 +124,7 @@ void ofApp::setup() {
 	// NDI setup * * * * * * * * * * * * * 
 	// NDI setup * * * * * * * * * * * * * 
 
-	if (ndiActive){
+	if (ndiActive) {
 		NDIlock = false;
 		cout << "NDI SDK copyright NewTek (http:\\NDI.NewTek.com)" << endl;
 		// Set the dimensions of the sender output here
@@ -232,9 +232,9 @@ void ofApp::setup() {
 		Pbo2Index = NextPbo2Index = 0;
 		bUsePBO2 = true; // Change to false to compare  // DUSX was originally true
 	}
-else {
-	NDIlock = true;
-}
+	else {
+		NDIlock = true;
+	}
 	// NDI setup DONE ^ ^ ^ * * * * * * * * * *
 	// NDI setup DONE ^ ^ ^ * * * * * * * * * *
 	// NDI setup DONE ^ ^ ^ * * * * * * * * * *
@@ -370,7 +370,7 @@ void ofApp::update() {
 		*/
 
 
-	// shorten names to minimize packet size
+		// shorten names to minimize packet size
 	const char * jointNames[] = { "SpineBase", "SpineMid", "Neck", "Head",
 		"ShldrL", "ElbowL", "WristL", "HandL",
 		"ShldrR", "ElbowR", "WristR", "HandR",
@@ -391,29 +391,30 @@ void ofApp::update() {
 	 body. activity  ??what is this
 	 */
 
-	// defined in new coordmap section as &
-	//	auto bodies = kinect.getBodySource()->getBodies();
+	 // defined in new coordmap section as &
+	 //	auto bodies = kinect.getBodySource()->getBodies();
 
 
 	if (jsonGrouped) {
 		body2JSON(bodies, jointNames);
-	}else{
+	}
+	else {
 		// TODO:: seperate function and add additional features like hand open/closed
 		// NON JSON osc messages
-			for (auto body : bodies) {
-				for (auto joint : body.joints) {
-					auto pos = joint.second.getPositionInWorld();
-					ofxOscMessage m;
-					string adrs = "/" + to_string(body.bodyId) + "/" + jointNames[joint.first];
-					m.setAddress(adrs);
-					m.addFloatArg(pos.x);
-					m.addFloatArg(pos.y);
-					m.addFloatArg(pos.z);
-					m.addStringArg(jointNames[joint.first]);
-					oscSender.sendMessage(m);
+		for (auto body : bodies) {
+			for (auto joint : body.joints) {
+				auto pos = joint.second.getPositionInWorld();
+				ofxOscMessage m;
+				string adrs = "/" + to_string(body.bodyId) + "/" + jointNames[joint.first];
+				m.setAddress(adrs);
+				m.addFloatArg(pos.x);
+				m.addFloatArg(pos.y);
+				m.addFloatArg(pos.z);
+				m.addStringArg(jointNames[joint.first]);
+				oscSender.sendMessage(m);
 
-				} // end inner joints loop
-			} // end body loop
+			} // end inner joints loop
+		} // end body loop
 
 	} // end if/else
 
@@ -517,7 +518,7 @@ void ofApp::draw() {
 			spout.sendTexture(fboDepth.getTextureReference(), "kv2_cutout");
 		}
 		// NDI
-		if (ndiCutOut && ndiActive && !NDIlock){
+		if (ndiCutOut && ndiActive && !NDIlock) {
 			// Set the sender name
 			strcpy(senderName, cutout_StreamName.c_str()); // convert from std string to cstring
 			sendNDI(ndiSender2, fboDepth, bUsePBO2, DEPTH_WIDTH, DEPTH_HEIGHT, senderName, cutout_ndiBuffer, cutout_idx);
@@ -540,7 +541,8 @@ void ofApp::draw() {
 			//Draw from FBO, removed if not checked
 			ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 			fboDepth.draw(previewWidth * 2, 0, previewWidth, previewHeight);
-		} else {
+		}
+		else {
 			//ofSetFrameRate(60);
 			ss.str("");
 			ss << "Keyed image only shown when" << endl;
@@ -714,7 +716,7 @@ void ofApp::body2JSON(vector<ofxKinectForWindows2::Data::Body> bodies, const cha
 
 // NDI
 // straight from ofxNDI examples
-void ofApp::sendNDI(ofxNDIsender & ndiSender_, ofFbo & sourceFBO_, 
+void ofApp::sendNDI(ofxNDIsender & ndiSender_, ofFbo & sourceFBO_,
 	bool bUsePBO_, int senderWidth_, int senderHeight_, char senderName_[256], ofPixels ndiBuffer_[], int idx_)
 {
 	if (ndiSender_.GetAsync())
@@ -724,8 +726,8 @@ void ofApp::sendNDI(ofxNDIsender & ndiSender_, ofFbo & sourceFBO_,
 	if (bUsePBO_) {
 		// Read fbo using two pbos
 		// if (&ndiSender == &ndiSender1) {}
-			ReadFboPixels(sourceFBO_, senderWidth_, senderHeight_, ndiBuffer_[idx_].getPixels());
-		
+		ReadFboPixels(sourceFBO_, senderWidth_, senderHeight_, ndiBuffer_[idx_].getPixels());
+
 	}
 	else {
 		// Read fbo directly

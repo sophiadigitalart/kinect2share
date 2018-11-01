@@ -1,5 +1,4 @@
 ofxGui
-ofxInputField
 ofxKinectForWindows2
 ofxNDI
 ofxOsc

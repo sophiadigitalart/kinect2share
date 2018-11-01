@@ -24,7 +24,7 @@
 #include "ofxKinectForWindows2.h"
 #include "ofxOsc.h"
 #include "ofxGui.h"
-#include "ofxInputField.h"
+//#include "ofxInputField.h"
 #include "ofxSpout2Sender.h"
 #include "ofxNDI.h"
 
@@ -161,5 +161,5 @@ public:
 	// helper Functions
 	string escape_quotes(const string & before);
 	void body2JSON(vector<ofxKinectForWindows2::Data::Body> bodies, const char * jointNames[]);
-	void sendNDI(ofxNDIsender & ndiSender, ofFbo & sourceFBO, bool bUsePBO,  int senderWidth, int senderHeight, char senderName[256], ofPixels ndiBuffer[], int idx);
+	void sendNDI(ofxNDIsender & ndiSender, ofFbo & sourceFBO, bool bUsePBO, int senderWidth, int senderHeight, char senderName[256], ofPixels ndiBuffer[], int idx);
 };
