@@ -836,7 +836,12 @@ void ofApp::mouseDragged(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
-
+	ofxOscMessage m;
+	string adrs = "/mousemove/1";
+	m.setAddress(adrs);
+	m.addIntArg(x);
+	m.addIntArg(y);
+	oscSender.sendMessage(m);
 }
 
 //--------------------------------------------------------------
