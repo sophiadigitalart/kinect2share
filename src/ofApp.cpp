@@ -410,9 +410,13 @@ void ofApp::update() {
 				m.addFloatArg(pos.x);
 				m.addFloatArg(pos.y);
 				m.addFloatArg(pos.z);
+				m.addIntArg(joint.first);
+				m.addIntArg(body.bodyId);
 				m.addStringArg(jointNames[joint.first]);
 				oscSender.sendMessage(m);
-
+				//cout << adrs << endl;
+				ofLogError() << adrs;
+				ofLogNotice() << "osc send " << adrs;
 			} // end inner joints loop
 		} // end body loop
 
@@ -705,7 +709,7 @@ void ofApp::body2JSON(vector<ofxKinectForWindows2::Data::Body> bodies, const cha
 		bdata = escape_quotes(bdata);
 		bdata = "[" + bdata + "]";
 		bdata = "{\"b" + to_string(body.bodyId) + "\": \"" + bdata + "\"}";
-		//cout << bdata << endl;
+		cout << bdata << endl;
 		ofxOscMessage m;
 		string adrs = "/kV2/body/" + to_string(body.bodyId);
 		m.setAddress(adrs);
